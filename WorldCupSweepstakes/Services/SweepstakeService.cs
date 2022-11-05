@@ -19,7 +19,7 @@ namespace WorldCupSweepstakes.Services
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
         }
 
-        public async void Calculate()
+        public async Task StartAsync()
         {
             var buckets = await _oddsService.GetCurrentOddsBuckets();
 

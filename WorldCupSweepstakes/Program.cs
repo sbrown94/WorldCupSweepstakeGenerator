@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Abstractions;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -18,10 +17,10 @@ namespace WorldCupSweepstakes
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         } 
 
-        static async void Main(string[] args)
+        static async Task Main(string[] args)
         {
             var configuration = BuildConfiguration();
-            await new Program(configuration).RunAsync();
+            await new Program(configuration).RunAsync(configuration);
         }
 
         private async Task RunAsync(IConfiguration configuration)
@@ -29,8 +28,10 @@ namespace WorldCupSweepstakes
             try
             {
                 var services = new ServiceCollection()
-                    .AddServices(configuration);
-                await services.GetService<SweepstakeService>().StartAsync();
+                    .AddServices(configuration)
+                    .BuildServiceProvider();
+
+                await services.GetService<ISweepstakeService>().StartAsync();
             }
             catch(Exception e)
             {
