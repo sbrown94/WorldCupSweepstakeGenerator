@@ -28,10 +28,24 @@ namespace WorldCupSweepstakes.Services
             if (!Validate(results))
                 throw new Exception("fucked up");
 
+            WriteToFile(results);
+
             Print(results);
 
             //write
             Console.ReadLine();
+        }
+
+        private void WriteToFile(List<PlayerTeamAssignment> results)
+        {
+            var str = new StringBuilder();
+
+            foreach(var result in results)
+            {
+                str.AppendLine($"{result.PlayerName}: {result.Teams[0]}, {result.Teams[1]}");
+            }
+
+            System.IO.File.WriteAllText("output.txt", str.ToString());
         }
 
         private bool Validate(List<PlayerTeamAssignment> results)
@@ -92,9 +106,11 @@ namespace WorldCupSweepstakes.Services
 
             Console.ReadLine();
 
+            var index = 1;
+
             foreach(var result in results)
             {
-                Console.WriteLine($"PLAYER: [{result.PlayerName}]");
+                Console.WriteLine($"PLAYER number {index}: [{result.PlayerName}]");
                 Console.ReadLine();
                 Console.WriteLine("YOU GET !!");
                 Console.WriteLine($"TEAM 1: [{result.Teams.First()}]");
@@ -103,11 +119,15 @@ namespace WorldCupSweepstakes.Services
                 Console.ReadLine();
                 PrintXLines(3);
                 Console.WriteLine("NEXT PLAYER:");
+                index++;
             }
 
             Console.WriteLine("that's the FOOTBALL ~~~~~~~~~~~~~~~~~~~~~~~~~~");
             Console.WriteLine("GOOD LUCK!");
             Console.WriteLine("Program made by Scott age 28");
+            Console.ReadLine();
+
+
         }
 
         private void PrintXLines(int x)
