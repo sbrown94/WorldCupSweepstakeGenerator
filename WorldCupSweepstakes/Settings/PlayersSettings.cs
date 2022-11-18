@@ -2,6 +2,6 @@
 {
     public class PlayersSettings
     {
-        public string[] Players { get; set; }
+        public string[] Names { get; set; }
     }
 }

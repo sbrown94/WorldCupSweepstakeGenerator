@@ -42,18 +42,18 @@ namespace WorldCupSweepstakes.Services
 
             client.BaseAddress = new Uri(_settings.UrlPath);
 
-            var urlParams = $"&{_settings.ApiKey}";
+            var urlParams = $"v4/sports/soccer_fifa_world_cup_winner/odds/?regions=uk&apiKey={_settings.ApiKey}";
 
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
             HttpResponseMessage response = await client.GetAsync(urlParams);
 
-            var result = await response.Content.ReadAsAsync<OddsApiResponse>();
+            var result = await response.Content.ReadAsAsync<OddsApiResponse[]>();
 
             client.Dispose();
 
-            return result;
+            return result.First();
         }
     }
 }

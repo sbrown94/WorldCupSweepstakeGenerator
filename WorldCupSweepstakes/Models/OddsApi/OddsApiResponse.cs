@@ -38,6 +38,6 @@ namespace WorldCupSweepstakes.Models.OddsApi
         public string Name { get; set; }
 
         [JsonPropertyName("price")]
-        public string Price { get; set; }
+        public decimal? Price { get; set; }
     }
 }
